@@ -1,4 +1,4 @@
-﻿#Persistent
+#Persistent
 #NoEnv
 #KeyHistory 0
 SetBatchLines, -1
@@ -11,7 +11,6 @@ Gui, Add, Text, x10 y10 w200 h20 vStatusLabel, NaN
 Gui, Add, DropDownList, vFunctionList, AAS|VHL Atk|VHL Def
 Gui, Add, Button, gRunFunction, Run Function
 Gui, Add, Button, gStopScript, Stop Script
-Gui, Add, Checkbox, vMyCheckbox, Return Focus?
 Gui, Add, Button, gRestoreBtn, Restore
 Gui, +AlwaysOnTop
 Gui, Show
@@ -126,15 +125,12 @@ SendSleep(key, time)
     {
         GetFocused()
        
-        WinActivate, ahk_exe Artix Game Launcher.exe
 
-        ControlSend,, %key%, ahk_exe Artix Game Launcher.exe
+        ControlFocus, Chrome Legacy Window, ahk_exe Artix Game Launcher.exe
+        ControlSend, Chrome Legacy Window, %key%, ahk_exe Artix Game Launcher.exe
 
         GuiControlGet, MyCheckbox
-        if(MyCheckbox = 1)
-        {
-            WinActivate, %PreWin%
-        }
+
         
         Sleep, time
 
