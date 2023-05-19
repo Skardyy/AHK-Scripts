@@ -7,13 +7,17 @@ SendMode Input
 SetTitleMatchMode fast
 SetTitleMatchMode 2
 SetWinDelay, -1
-Gui, Add, Text, x10 y10 w200 h20 vStatusLabel, NaN
-Gui, Add, DropDownList, vFunctionList, AAS|VHL Atk|VHL Def
-Gui, Add, Button, gRunFunction, Run Function
-Gui, Add, Button, gStopScript, Stop Script
-Gui, Add, Button, gRestoreBtn, Restore
+CoordMode, Mouse, Window
+Gui, Color, 0A0C10, FFFFFF
+Gui, Font, s12 cADBAC7 Bold
+Gui, Add, Text, x10 y10 w200 h20 center vStatusLabel, NaN
+Gui, Add, DropDownList,w200 Center vFunctionList, LR|VHL|CAV
+Gui, Add, Button,w200 Center gRunFunction, Run Function
+Gui, Add, Button,w200 Center gStopScript, Stop Script
+Gui, Add, Button,w200 Center gRestoreBtn, Restore
 Gui, +AlwaysOnTop
 Gui, Show
+
 Return
 
 GuiClose:
@@ -23,63 +27,94 @@ GuiClose:
 global Running := True
 global PreWin := a
 
-AAS()
+CAV()
 {
+    if(SendSleep(4, 1500) = False)
+        Return 
     Loop
-    {
-        if(SendSleep(1, 500) = False)
-            Return    
-        if(SendSleep(3, 1500) = False)
-            Return  
-        if(SendSleep(4, 500) = False)
-            Return  
+    { ;17.5 sec circle, 3 sec 2, 7.5 sec 3, 3 sec 4
+        if(SendSleep(5, 800) = False)
+            Return 
         if(SendSleep(1, 1000) = False)
+            Return
+        if(SendSleep(2, 800) = False)
+            Return
+        if(SendSleep(1, 1000) = False)
+            Return
+        if(SendSleep(4, 800) = False)
+            Return
+        if(SendSleep(1, 1000) = False)
+            Return
+        if(SendSleep(2, 800) = False)
+            Return
+        if(SendSleep(1, 1000) = False)
+            Return
+        if(SendSleep(3, 800) = False)
+            Return
+        if(SendSleep(1, 1000) = False)
+            Return
+        if(SendSleep(2, 800) = False)
+            Return
+        if(SendSleep(1, 1000) = False)
+            Return
+        if(SendSleep(4, 800) = False)
+            Return
+        if(SendSleep(1, 1000) = False)
+            Return
+        if(SendSleep(2, 800) = False)
+            Return
+        if(SendSleep(1, 1000) = False)
+            Return
+        if(SendSleep(4, 800) = False)
+            Return
+        if(SendSleep(1, 1000) = False)
+            Return
+        if(SendSleep(2, 800) = False)
+            Return
+        if(SendSleep(1, 1000) = False)
+            Return
+    }
+}
+LR()
+{
+    if(SendSleep(4, 2000) = False)
+        Return  
+    Loop
+    {
+        if(SendSleep(2, 1200) = False)
+            Return    
+        if(SendSleep(3, 1200) = False)
             Return  
-        if(SendSleep(3, 500) = False)
+        if(SendSleep(4, 1200) = False)
             Return  
-        if(SendSleep(1, 1500) = False)
+        if(SendSleep(5, 1200) = False)
+            Return  
+        if(SendSleep(2, 1200) = False)
+            Return  
+        if(SendSleep(3, 1200) = False)
             Return 
-        if(SendSleep(3, 500) = False)
+        if(SendSleep(4, 1200) = False)
             Return  
     }
     Return
 }
-
-VHL_OFF()
-{
+VHL()
+{ ;7.5 sec cicle, 2 sec cd for 2, 2.5 cd for 3, 0.8 sec normal cd
     Loop
     {
-        if(SendSleep(4, 2000) = False)
-            Return  
-        if(SendSleep(3, 1000) = False)
-            Return 
-        if(SendSleep(5, 2000) = False)
+        if(SendSleep(2, 1000) = False)
+            Return
+        if(SendSleep(5, 1050) = False)
             Return    
-        if(SendSleep(3, 1000) = False)
+        if(SendSleep(2, 800) = False)
             Return 
-        if(SendSleep(4, 2000) = False)
-            Return  
-        if(SendSleep(3, 1000) = False)
+        if(SendSleep(3, 1250) = False)
             Return 
-    }
-    Return
-}
-
-VHL_DEF()
-{
-    Loop
-    {
-        if(SendSleep(2, 2000) = False)
-            Return  
-        if(SendSleep(3, 1000) = False)
-            Return 
-        if(SendSleep(5, 2000) = False)
+        if(SendSleep(2, 2050) = False)
             Return    
-        if(SendSleep(3, 1000) = False)
-            Return 
-        if(SendSleep(2, 2000) = False)
-            Return  
-        if(SendSleep(3, 1000) = False)
+        if(SendSleep(2, 800) = False)
+            Return
+        if(SendSleep(3, 1250) = False)
             Return 
     } 
     Return
@@ -92,12 +127,12 @@ RunFunction()
     GuiControlGet, FunctionList
     GuiControl,, StatusLabel, {%FunctionList%} Script is running...
 
-    If(FunctionList = "AAS")
-        AAS()    
-    Else If(FunctionList = "VHL Atk")
-        VHL_OFF()      
-    Else If(FunctionList = "VHL Def")    
-        VHL_DEF()  
+    If(FunctionList = "LR")
+        LR()    
+    Else If(FunctionList = "VHL")
+        VHL()
+    Else if(FunctionList = "CAV")
+        CAV()
     Return
 }
 
@@ -112,8 +147,6 @@ StopScript()
     GuiControl,, StatusLabel, NaN
     Return
 }
-    
-
 
 SendSleep(key, time)
 {
@@ -123,27 +156,13 @@ SendSleep(key, time)
     }
     Else
     {
-        GetFocused()
-       
-
         ControlFocus, Chrome Legacy Window, ahk_exe Artix Game Launcher.exe
         ControlSend, Chrome Legacy Window, %key%, ahk_exe Artix Game Launcher.exe
 
         GuiControlGet, MyCheckbox
-
         
         Sleep, time
 
         Return
     } 
-}
-
-GetFocused()
-{
-    Win := WinExist("A")
-    if(Win != WinExist(ahk_exe Artix Game Launcher.exe)) ; checks if the game is focused
-    {
-        PreWin := Win
-    }
-    Return
 }
