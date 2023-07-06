@@ -11,7 +11,7 @@ CoordMode, Mouse, Window
 Gui, Color, 0A0C10, FFFFFF
 Gui, Font, s12 cADBAC7 Bold
 Gui, Add, Text, x10 y10 w200 h20 center vStatusLabel, NaN
-Gui, Add, DropDownList,w200 Center vFunctionList, LR|VHL|CAV
+Gui, Add, DropDownList,w200 Center vFunctionList, LR|VHL|Timekeeper
 Gui, Add, Button,w200 Center gRunFunction, Run Function
 Gui, Add, Button,w200 Center gStopScript, Stop Script
 Gui, Add, Button,w200 Center gRestoreBtn, Restore
@@ -27,6 +27,31 @@ GuiClose:
 global Running := True
 global PreWin := a
 
+Spam2()
+{
+    loop
+    {
+        if(SendSleep(2, 500) = False)
+            Return 
+    }
+}
+QCM() ; not working yet
+{
+    if(SendSleep(2, 1000) = False)
+        Return 
+    if(SendSleep(3, 1000) = False)
+        Return 
+    if(SendSleep(2, 1000) = False)
+        Return 
+    if(SendSleep(2, 1000) = False)
+        Return 
+    if(SendSleep(3, 1000) = False)
+        Return 
+    if(SendSleep(4, 1000) = False)
+        Return 
+    if(SendSleep(5, 1000) = False)
+        Return 
+}
 CAV()
 {
     if(SendSleep(4, 1500) = False)
@@ -119,7 +144,26 @@ VHL()
     } 
     Return
 }
-
+TimeKeeper()
+{
+    if(SendSleep(3, 1750) = False)
+        Return  
+    loop
+    {
+        if(SendSleep(2, 1100) = False)
+            Return
+        if(SendSleep(5, 1100) = False)
+            Return
+        if(SendSleep(2, 1100) = False)
+            Return
+        if(SendSleep(3, 1100) = False)
+            Return
+        if(SendSleep(2, 1100) = False)
+            Return
+        if(SendSleep(4, 1100) = False)
+            Return
+    }
+}
 RunFunction()
 {   
     Running = True
@@ -133,6 +177,12 @@ RunFunction()
         VHL()
     Else if(FunctionList = "CAV")
         CAV()
+    Else if(FunctionList = "Timekeeper")
+        TimeKeeper()
+    Else if(FunctionList = "Spam2")
+        Spam2()
+    Else if(FunctionList = "QCM")
+        QCM()
     Return
 }
 
