@@ -1,0 +1,32 @@
+
+#NoEnv  
+Gui, Add, Button, w100 h30 gTerminate , Terminate
+Gui, Show, , Autoclicker
+global autoClicking := True
+return
+
+Terminate:
+    ExitApp
+return
+
+GuiClose:
+    Exitapp
+Return
+
+
+p:: SpamClick()
+o:: autoClicking := !autoClicking
+
+
+SpamClick()
+{
+    ToolTip, %autoClicking%
+    while (autoClicking) {  
+        Click
+    
+        Sleep, 100
+    }
+    
+    return
+}
+
